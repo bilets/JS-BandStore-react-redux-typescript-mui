@@ -9,9 +9,13 @@ import Cart from './routes/Cart.tsx';
 import NotFoundPage from './routes/NotFoundPage.tsx';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
+//import { useDispatch } from 'react-redux';
+//import { addToCart } from './redux/cart/actionCreators.js';
+
 export default function App() {
   const [username, setUsername] = useState<string>('');
   const [cart, setCart] = useState<CartItem[]>([]);
+  //const dispatch = useDispatch();
 
   const addUsernameHandler = (username: string) => {
     setUsername(username);

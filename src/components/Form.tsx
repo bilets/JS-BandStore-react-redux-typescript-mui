@@ -1,6 +1,9 @@
 import { useState, ChangeEvent } from 'react';
 import { Box, TextField, Typography, Button } from '@mui/material';
 
+import { useDispatch } from 'react-redux';
+import { addToCartR } from '../redux/cart/actionCreators';
+
 interface FormProps {
   addToCart: (item: { title: string; count: number; total: number }) => void;
   title: string;
@@ -15,6 +18,7 @@ export default function Form({
   bookInCartCountHandler,
 }: FormProps) {
   const [count, setCount] = useState<number>(1);
+  const dispatch = useDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -29,8 +33,11 @@ export default function Form({
     const total = price * count;
     addToCart({ title, count, total });
     bookInCartCountHandler(count);
+    dispatch(addToCartR({ title, count, total })); // Dispatch the action to update the Redux store
     setCount(1); // Скидання після додавання
   };
+
+
 
   return (
     <Box sx={{ mt: 2 }}>
