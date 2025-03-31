@@ -1,18 +1,18 @@
-import { useState, useContext, useMemo } from 'react';
-import BooksContext, { BookType } from '../context/BooksContext.ts';
+import { useState, useMemo } from 'react';
+import { BookType } from '../context/BooksContext';
 import BookSearch from '../components/BookSearch.tsx';
 import BookSelect from '../components/BookSelect.tsx';
 import Books from '../components/Books.tsx';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import booksData from '../data/books.json';
 
 export default function BookList() {
-  const BOOKS = useContext(BooksContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPriceRange, setSelectedPriceRange] = useState<number>(1);
 
   const filteredBooks = useMemo(() => {
-    return BOOKS.filter((book: BookType) => {
+    return booksData.filter((book: BookType) => {
       const matchesSearch = book.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -25,7 +25,7 @@ export default function BookList() {
       })();
       return matchesSearch && matchesPriceRange;
     });
-  }, [BOOKS, searchTerm, selectedPriceRange]);
+  }, [booksData, searchTerm, selectedPriceRange]);
 
   const searchBooksHandler = (term: string): void => {
     setSearchTerm(term);

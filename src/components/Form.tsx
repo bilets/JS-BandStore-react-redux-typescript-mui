@@ -1,26 +1,19 @@
 import { useState, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/cart/actionCreators';
 import { Box, TextField, Typography, Button } from '@mui/material';
 
-import { useDispatch } from 'react-redux';
-import { addToCartR } from '../redux/cart/actionCreators';
-
 interface FormProps {
-  addToCart: (item: { title: string; count: number; total: number }) => void;
   title: string;
   price: number;
-  bookInCartCountHandler: (count: number) => void;
+  id: number;
 }
 
-export default function Form({
-  addToCart,
-  title,
-  price,
-  bookInCartCountHandler,
-}: FormProps) {
+export default function Form({ title, price, id }: FormProps) {
   const [count, setCount] = useState<number>(1);
   const dispatch = useDispatch();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value)) {
       setCount(Math.max(1, Math.min(value, 42)));
@@ -29,15 +22,10 @@ export default function Form({
     }
   };
 
-  const handleClick = () => {
-    const total = price * count;
-    addToCart({ title, count, total });
-    bookInCartCountHandler(count);
-    dispatch(addToCartR({ title, count, total })); // Dispatch the action to update the Redux store
-    setCount(1); // Скидання після додавання
+  const addToCartHandler = () => {
+    dispatch(addToCart({ title, count, price, id }));
+    setCount(1);
   };
-
-
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -56,17 +44,15 @@ export default function Form({
           </Typography>
           <Typography variant="body2">{price.toFixed(2)}</Typography>
         </Box>
-
         <Box sx={{ flex: '1 1 30%' }}>
           <TextField
             label="Count"
             type="number"
             value={count}
-            onChange={handleChange}
+            onChange={onChangeHandler}
             fullWidth
           />
         </Box>
-
         <Box sx={{ flex: '1 1 30%' }}>
           <Typography variant="body1" gutterBottom>
             Total price, $
@@ -74,12 +60,11 @@ export default function Form({
           <Typography variant="body2">{(price * count).toFixed(2)}</Typography>
         </Box>
       </Box>
-
       <Box sx={{ mt: 2 }}>
         <Button
           variant="contained"
           color="primary"
-          onClick={handleClick}
+          onClick={addToCartHandler}
           fullWidth
         >
           Add to cart

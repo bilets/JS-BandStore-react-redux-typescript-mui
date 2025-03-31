@@ -1,9 +1,9 @@
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import BooksContext, { BookType } from '../context/BooksContext.ts';
-import CartContext, { CartItem } from '../context/CartContext.ts';
+import booksData from '../data/books.json';
+import { BookType } from '../context/BooksContext.ts';
+import { CartItem } from '../context/CartContext.ts';
 import NotFoundPage from './NotFoundPage.tsx';
-import imageNotFound from '../images/imageNotFound.png';
 import Form from '../components/Form.tsx';
 import {
   Box,
@@ -13,24 +13,18 @@ import {
   CardContent,
   Container,
 } from '@mui/material';
+import imageNotFound from '../images/imageNotFound.png';
 
-interface SpecificBookProps {
-  addToCart: (item: CartItem) => void;
-}
 
-export default function SpecificBook({ addToCart }: SpecificBookProps) {
-  const books = useContext(BooksContext);
-  const cart = useContext(CartContext);
+
+export default function SpecificBook() {
+  const cart = useSelector((state: any) => state.cart); 
   const { title } = useParams<{ title: string }>();
 
-  const book = books.find((book: BookType) => book.title === title);
+  const book = booksData.find((book: BookType) => book.title === title);
 
-  const [bookInCartCount, setBookInCartCount] = useState<number>(
-    cart.find((bookInCart: CartItem) => bookInCart.title === title)?.count || 0
-  );
-
-  const bookInCartCountHandler = (count: number) =>
-    setBookInCartCount(bookInCartCount + count);
+  const bookInCartCount =
+    cart.find((bookInCart: CartItem) => bookInCart.title === title)?.count || 0;
 
   if (!book) {
     return <NotFoundPage />;
@@ -55,12 +49,7 @@ export default function SpecificBook({ addToCart }: SpecificBookProps) {
           <Typography variant="body2" color="text.secondary">
             Book in cart: {bookInCartCount}
           </Typography>
-          <Form
-            addToCart={addToCart}
-            title={book.title}
-            price={book.price}
-            bookInCartCountHandler={bookInCartCountHandler}
-          />
+          <Form title={book.title} price={book.price} id={book.id} />
         </CardContent>
       </Card>
       <Container sx={{ marginTop: 2 }}>

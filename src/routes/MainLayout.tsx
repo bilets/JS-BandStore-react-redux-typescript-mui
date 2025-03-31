@@ -6,13 +6,11 @@ import { Box } from '@mui/material';
 interface MainLayoutProps {
   username: string;
   resetUsername: () => void;
-  resetCart: () => void;
 }
 
 export default function MainLayout({
   username,
   resetUsername,
-  resetCart,
 }: MainLayoutProps) {
   return (
     <Box
@@ -24,11 +22,7 @@ export default function MainLayout({
         alignItems: 'center',
       }}
     >
-      <Header
-        username={username}
-        resetUsername={resetUsername}
-        resetCart={resetCart}
-      />
+      <Header username={username} resetUsername={resetUsername} />
       <Outlet />
       <Footer />
     </Box>

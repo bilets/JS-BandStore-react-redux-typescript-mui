@@ -1,4 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart } from '../redux/cart/actionCreators';
 import {
   AppBar,
   Box,
@@ -6,28 +8,40 @@ import {
   Typography,
   Button,
   Tooltip,
+  IconButton,
 } from '@mui/material';
+import Badge, { badgeClasses } from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 
 interface HeaderProps {
   username: string | null;
   resetUsername: () => void;
-  resetCart: () => void;
 }
 
-export default function Header({
-  username,
-  resetUsername,
-  resetCart,
-}: HeaderProps) {
+export default function Header({ username, resetUsername }: HeaderProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cart = useSelector((state: any) => state.cart);
+  const totalBooksInCart = cart.reduce(
+    (sum: number, item: { count: number }) => sum + item.count,
+    0
+  );
 
   const signOut = (): void => {
     navigate('/');
     resetUsername();
-    resetCart();
+    dispatch(clearCart()); // Clear the cart when signing out
   };
+
+  const CartBadge = styled(Badge)`
+    & .${badgeClasses.badge} {
+      top: -12px;
+      right: -6px;
+    }
+  `;
 
   if (!username) {
     return (
@@ -65,15 +79,18 @@ export default function Header({
           </Tooltip>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Link to="/cart">
-              <ShoppingCartOutlinedIcon
-                fontSize="large"
-                sx={{
-                  color: 'white',
-                  '&:hover': {
-                    color: 'red',
-                  },
-                }}
-              />
+              <IconButton>
+                <ShoppingCartOutlinedIcon
+                  fontSize="large"
+                  sx={{
+                    color: 'white',
+                    '&:hover': {
+                      color: 'red',
+                    },
+                  }}
+                />
+                <CartBadge badgeContent={totalBooksInCart} color="primary" />
+              </IconButton>
             </Link>
             <Button
               color="inherit"

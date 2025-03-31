@@ -1,6 +1,10 @@
-import { useContext } from 'react';
-import CartContext, { CartItem } from '../context/CartContext.ts';
-import cartImg from '../images/cart.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteBook,
+  clearCart,
+  decreaseQuantityBook,
+  increaseQuantityBook,
+} from '../redux/cart/actionCreators';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,13 +13,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Box, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import cartImg from '../images/cart.svg';
 
-interface CartProps {
-  resetCart: () => void;
+interface CartItem {
+  title: string;
+  price: number;
+  count: number;
+  id: string;
 }
 
-export default function Cart({ resetCart }: CartProps) {
-  const cart = useContext(CartContext);
+export default function Cart() {
+  const cart = useSelector((state: any) => state.cart); 
+  const dispatch = useDispatch();
 
   if (cart.length === 0) {
     return (
@@ -30,8 +43,26 @@ export default function Cart({ resetCart }: CartProps) {
     );
   }
 
-  const totalAll = cart.reduce((sum, item: CartItem) => sum + item.total, 0);
-    
+  const totalAll: number = cart.reduce(
+    (sum: number, item: CartItem) => sum + item.count * item.price,
+    0
+  );
+
+  const handleDecreaseQuantity = (id: string) => {
+    dispatch(decreaseQuantityBook(id));
+  };
+
+  const handleIncreaseQuantity = (id: string) => {
+    dispatch(increaseQuantityBook(id));
+  };
+
+  const handleDeleteBook = (id: string) => {
+    dispatch(deleteBook(id));
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
 
   return (
     <Box
@@ -46,33 +77,76 @@ export default function Cart({ resetCart }: CartProps) {
         <Table sx={{ minWidth: 700 }} aria-label="cart table">
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3} align="right">
+              <TableCell colSpan={4} align="right">
                 <Button
                   variant="contained"
                   color="primary"
-                  disabled={cart.length === 0}
-                  onClick={resetCart}
+                  sx={{
+                    '&:hover': {
+                      color: 'red',
+                    },
+                  }}
+                  onClick={handleClearCart}
                 >
-                  Purchase
+                  Clear Cart
                 </Button>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Book Name</TableCell>
-              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="center">Quantity</TableCell>
+              <TableCell align="right">Delete</TableCell>
               <TableCell align="right">Sum ($)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cart.map((book: CartItem) => (
-              <TableRow key={book.title}>
-                <TableCell>{book.title}</TableCell>
-                <TableCell align="right">{book.count}</TableCell>
-                <TableCell align="right">{book.total.toFixed(2)}</TableCell>
+            {cart.map((book: CartItem, index: number) => (
+              <TableRow key={book.id}>
+                <TableCell>
+                  {++index}. {book.title}
+                </TableCell>
+                <TableCell align="center">
+                  <IconButton
+                    onClick={() => handleDecreaseQuantity(book.id)}
+                    disabled={book.count === 1}
+                  >
+                    <RemoveCircleOutlineIcon
+                      sx={{
+                        '&:hover': {
+                          color: 'red',
+                        },
+                      }}
+                    />
+                  </IconButton>
+                  {book.count}
+                  <IconButton onClick={() => handleIncreaseQuantity(book.id)}>
+                    <AddCircleOutlineOutlinedIcon
+                      sx={{
+                        '&:hover': {
+                          color: 'red',
+                        },
+                      }}
+                    />
+                  </IconButton>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton onClick={() => handleDeleteBook(book.id)}>
+                    <DeleteIcon
+                      sx={{
+                        '&:hover': {
+                          color: 'red',
+                        },
+                      }}
+                    />
+                  </IconButton>
+                </TableCell>
+                <TableCell align="right">
+                  {(book.count * book.price).toFixed(2)}
+                </TableCell>
               </TableRow>
             ))}
             <TableRow>
-              <TableCell align="right" colSpan={2}>
+              <TableCell align="right" colSpan={3}>
                 <Typography variant="subtitle1" fontWeight="bold">
                   Total, $
                 </Typography>
