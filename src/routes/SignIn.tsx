@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { Stack, Button, TextField, Avatar } from '@mui/material';
 import avatar from '../images/avatar.png';
 
@@ -16,8 +16,16 @@ export default function SignIn({ addUsername }: SignInProps) {
   };
 
   const handleSignIn = (): void => {
-    navigate('books');
-    addUsername(username);
+   if (username.length >= 4 && username.length <= 16) {
+     navigate('books');
+     addUsername(username);
+   }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      handleSignIn();
+    }
   };
 
   return (
@@ -39,6 +47,7 @@ export default function SignIn({ addUsername }: SignInProps) {
         variant="outlined"
         value={username}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
         helperText="Please enter your name (4-16 characters)"
         size="small"
         fullWidth
