@@ -78,7 +78,7 @@ export default function Cart() {
                   color="primary"
                   sx={{
                     '&:hover': {
-                      color: 'red',
+                      color: 'secondary.main',
                     },
                   }}
                   onClick={handleClearCart}
@@ -108,7 +108,7 @@ export default function Cart() {
                     <RemoveCircleOutlineIcon
                       sx={{
                         '&:hover': {
-                          color: 'red',
+                          color: 'secondary.main',
                         },
                       }}
                     />
@@ -118,7 +118,7 @@ export default function Cart() {
                     <AddCircleOutlineOutlinedIcon
                       sx={{
                         '&:hover': {
-                          color: 'red',
+                          color: 'secondary.main',
                         },
                       }}
                     />
@@ -129,7 +129,7 @@ export default function Cart() {
                     <DeleteIcon
                       sx={{
                         '&:hover': {
-                          color: 'red',
+                          color: 'secondary.main',
                         },
                       }}
                     />

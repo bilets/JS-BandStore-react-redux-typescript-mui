@@ -84,7 +84,7 @@ export default function Header({
                 onClick={() => navigate('/books')}
                 sx={{
                   '&:hover': {
-                    color: 'red',
+                    color: 'secondary.main',
                     cursor: 'pointer',
                   },
                 }}
@@ -114,11 +114,14 @@ export default function Header({
                     sx={{
                       color: 'white',
                       '&:hover': {
-                        color: 'red',
+                        color: 'secondary.main',
                       },
                     }}
                   />
-                  <CartBadge badgeContent={totalBooksInCart} color="primary" />
+                  <CartBadge
+                    badgeContent={totalBooksInCart}
+                    color="secondary"
+                  />
                 </IconButton>
               </Link>
               <Button
@@ -126,7 +129,7 @@ export default function Header({
                 onClick={signOut}
                 sx={{
                   '&:hover': {
-                    color: 'red',
+                    color: 'secondary.main',
                   },
                 }}
               >
