@@ -1,4 +1,4 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../redux/cart/actionCreators';
 import {
@@ -14,17 +14,21 @@ import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookSearch from './BookSearch';
+import BookSelect from './BookSelect';
+import { HeaderProps } from '../types/types';
 
-
-interface HeaderProps {
-  username: string | null;
-  resetUsername: () => void;
-}
-
-export default function Header({ username, resetUsername }: HeaderProps) {
+export default function Header({
+  username,
+  resetUsername,
+  searchBooksHandler,
+  selectBooksHandler,
+}: HeaderProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state: any) => state.cart);
+  const location = useLocation();
+
   const totalBooksInCart = cart.reduce(
     (sum: number, item: { count: number }) => sum + item.count,
     0
@@ -33,7 +37,7 @@ export default function Header({ username, resetUsername }: HeaderProps) {
   const signOut = (): void => {
     navigate('/');
     resetUsername();
-    dispatch(clearCart()); // Clear the cart when signing out
+    dispatch(clearCart());
   };
 
   const CartBadge = styled(Badge)`
@@ -48,9 +52,7 @@ export default function Header({ username, resetUsername }: HeaderProps) {
       <Box>
         <AppBar>
           <Toolbar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-              JS BAND STORE
-            </Typography>
+            <Typography variant="h4">JS BAND STORE</Typography>
           </Toolbar>
         </AppBar>
       </Box>
@@ -60,53 +62,81 @@ export default function Header({ username, resetUsername }: HeaderProps) {
   return (
     <Box>
       <AppBar>
-        <Toolbar>
-          <Tooltip title="Back to Store" placement="bottom-start">
-            <Typography
-              variant="h4"
-              component="div"
-              onClick={() => navigate('/books')}
-              sx={{
-                flexGrow: 1,
-                '&:hover': {
-                  color: 'red',
-                  cursor: 'pointer',
-                },
-              }}
-            >
-              JS BAND STORE
-            </Typography>
-          </Tooltip>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Link to="/cart">
-              <IconButton>
-                <ShoppingCartOutlinedIcon
-                  fontSize="large"
-                  sx={{
-                    color: 'white',
-                    '&:hover': {
-                      color: 'red',
-                    },
-                  }}
-                />
-                <CartBadge badgeContent={totalBooksInCart} color="primary" />
-              </IconButton>
-            </Link>
-            <Button
-              color="inherit"
-              onClick={signOut}
-              sx={{
-                '&:hover': {
-                  color: 'red',
-                },
-              }}
-            >
-              Sign-out
-            </Button>
-            <AccountCircleIcon fontSize="large" />
-            <Typography variant="body1" color="inherit">
-              {username}
-            </Typography>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Tooltip title="Back to Store" placement="bottom-start">
+              <Typography
+                variant="h4"
+                onClick={() => navigate('/books')}
+                sx={{
+                  '&:hover': {
+                    color: 'red',
+                    cursor: 'pointer',
+                  },
+                }}
+              >
+                JS BAND STORE
+              </Typography>
+            </Tooltip>
+            {location.pathname === '/books' && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  gap: 2,
+                  mt: { xs: 2, sm: 0 },
+                }}
+              >
+                <BookSearch searchBooks={searchBooksHandler} />
+                <BookSelect selectBooks={selectBooksHandler} />
+              </Box>
+            )}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Link to="/cart">
+                <IconButton>
+                  <ShoppingCartOutlinedIcon
+                    fontSize="large"
+                    sx={{
+                      color: 'white',
+                      '&:hover': {
+                        color: 'red',
+                      },
+                    }}
+                  />
+                  <CartBadge badgeContent={totalBooksInCart} color="primary" />
+                </IconButton>
+              </Link>
+              <Button
+                color="inherit"
+                onClick={signOut}
+                sx={{
+                  '&:hover': {
+                    color: 'red',
+                  },
+                }}
+              >
+                Sign-out
+              </Button>
+              <AccountCircleIcon fontSize="large" />
+              <Typography variant="body1" color="inherit">
+                {username}
+              </Typography>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>

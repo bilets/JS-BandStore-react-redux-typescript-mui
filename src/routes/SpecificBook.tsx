@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import booksData from '../data/books.json';
-import { BookType } from '../context/BooksContext.ts';
-import { CartItem } from '../context/CartContext.ts';
+import { BookType } from '../types/types';
+import { CartItem } from '../types/types';
 import NotFoundPage from './NotFoundPage.tsx';
 import Form from '../components/Form.tsx';
 import {
@@ -13,12 +12,11 @@ import {
   CardContent,
   Container,
 } from '@mui/material';
-import imageNotFound from '../images/imageNotFound.png';
-
-
+import booksData from '../data/books.json';
+import imageNotFound from '/images/imageNotFound.png';
 
 export default function SpecificBook() {
-  const cart = useSelector((state: any) => state.cart); 
+  const cart = useSelector((state: any) => state.cart);
   const { title } = useParams<{ title: string }>();
 
   const book = booksData.find((book: BookType) => book.title === title);
@@ -31,11 +29,30 @@ export default function SpecificBook() {
   }
 
   return (
-    <Box sx={{ p: 1, pt: 10 }}>
-      <Card sx={{ display: 'flex', marginBottom: 2 }}>
+    <Box
+      sx={{
+        p: 1,
+        pt: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          marginBottom: 2,
+          width: '100%',
+          maxWidth: 800,
+        }}
+      >
         <CardMedia
           component="img"
-          sx={{ width: 300 }}
+          sx={{
+            width: { xs: '100%', sm: 300 },
+            height: { xs: 'auto', sm: '100%' },
+          }}
           image={book.image ? book.image : imageNotFound}
           alt={book.title}
         />
@@ -52,7 +69,7 @@ export default function SpecificBook() {
           <Form title={book.title} price={book.price} id={book.id} />
         </CardContent>
       </Card>
-      <Container sx={{ marginTop: 2 }}>
+      <Container sx={{ marginTop: 2, width: '100%', maxWidth: 800 }}>
         <Typography variant="subtitle1" component="div">
           Description:
         </Typography>

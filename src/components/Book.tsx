@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import imageNotFound from '../images/imageNotFound.png';
+import { BookType } from '../types/types';
 import {
   Card,
   CardActions,
@@ -12,17 +12,9 @@ import {
   AccordionDetails,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import imageNotFound from '/images/imageNotFound.png';
 
-interface BookProps {
-  id: number;
-  author: string;
-  price: number;
-  image: string;
-  title: string;
-  shortDescription: string;
-}
-
-const MAX_TITLE_LENGTH = 60; // Maximum length of the title
+const MAX_TITLE_LENGTH = 60; 
 
 export default function Book({
   author,
@@ -30,7 +22,7 @@ export default function Book({
   image,
   title,
   shortDescription,
-}: BookProps) {
+}: BookType) {
   const navigate = useNavigate();
 
   const truncatedTitle =

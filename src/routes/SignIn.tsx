@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { Stack, Button, TextField, Avatar } from '@mui/material';
-import avatar from '../images/avatar.png';
+import avatar from '/images/avatar.png';
 
 interface SignInProps {
   addUsername: (username: string) => void;

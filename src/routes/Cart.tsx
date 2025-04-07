@@ -5,6 +5,7 @@ import {
   decreaseQuantityBook,
   increaseQuantityBook,
 } from '../redux/cart/actionCreators';
+import { CartItem } from '../types/types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,17 +18,11 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import cartImg from '../images/cart.svg';
+import cartImg from '/images/cart.svg';
 
-interface CartItem {
-  title: string;
-  price: number;
-  count: number;
-  id: string;
-}
 
 export default function Cart() {
-  const cart = useSelector((state: any) => state.cart); 
+  const cart = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
   if (cart.length === 0) {
@@ -48,15 +43,15 @@ export default function Cart() {
     0
   );
 
-  const handleDecreaseQuantity = (id: string) => {
+  const handleDecreaseQuantity = (id: number) => {
     dispatch(decreaseQuantityBook(id));
   };
 
-  const handleIncreaseQuantity = (id: string) => {
+  const handleIncreaseQuantity = (id: number) => {
     dispatch(increaseQuantityBook(id));
   };
 
-  const handleDeleteBook = (id: string) => {
+  const handleDeleteBook = (id: number) => {
     dispatch(deleteBook(id));
   };
 

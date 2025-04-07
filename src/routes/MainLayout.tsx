@@ -1,17 +1,15 @@
 import { Outlet } from 'react-router-dom';
+import { HeaderProps } from '../types/types.ts';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import { Box } from '@mui/material';
 
-interface MainLayoutProps {
-  username: string;
-  resetUsername: () => void;
-}
-
 export default function MainLayout({
   username,
   resetUsername,
-}: MainLayoutProps) {
+  searchBooksHandler,
+  selectBooksHandler,
+}: HeaderProps) {
   return (
     <Box
       sx={{
@@ -22,7 +20,12 @@ export default function MainLayout({
         alignItems: 'center',
       }}
     >
-      <Header username={username} resetUsername={resetUsername} />
+      <Header
+        username={username}
+        resetUsername={resetUsername}
+        searchBooksHandler={searchBooksHandler}
+        selectBooksHandler={selectBooksHandler}
+      />
       <Outlet />
       <Footer />
     </Box>

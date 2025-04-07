@@ -1,8 +1,12 @@
 import * as a from './actionTypes';
+import { CartItem, Action } from '../../types/types'; 
 
-const initialState = [];
+const initialState: CartItem[] = [];
 
-export const cartReducer = (state = initialState, action) => {
+export const cartReducer = (
+  state = initialState,
+  action: Action
+): CartItem[] => {
   switch (action.type) {
     case a.ADD_TO_CART:
       const updatedCart = state.map((cartItem) => {

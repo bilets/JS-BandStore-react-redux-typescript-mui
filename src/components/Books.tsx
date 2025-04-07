@@ -1,15 +1,6 @@
+import { BookType } from '../types/types';
 import Book from './Book.tsx';
 import Box from '@mui/material/Box';
-
-interface BookType {
-  id: number;
-  author: string;
-  price: number;
-  image: string;
-  title: string;
-  shortDescription: string;
-  description: string;
-}
 
 interface BooksProps {
   books: BookType[];

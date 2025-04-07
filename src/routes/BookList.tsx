@@ -1,40 +1,13 @@
-import { useState, useMemo } from 'react';
-import { BookType } from '../context/BooksContext';
-import BookSearch from '../components/BookSearch.tsx';
-import BookSelect from '../components/BookSelect.tsx';
+import { BookType } from '../types/types';
 import Books from '../components/Books.tsx';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import booksData from '../data/books.json';
 
-export default function BookList() {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedPriceRange, setSelectedPriceRange] = useState<number>(1);
 
-  const filteredBooks = useMemo(() => {
-    return booksData.filter((book: BookType) => {
-      const matchesSearch = book.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesPriceRange = (() => {
-        if (selectedPriceRange === 1) return true;
-        if (selectedPriceRange === 2) return book.price > 0 && book.price < 15;
-        if (selectedPriceRange === 3) return book.price > 15 && book.price < 30;
-        if (selectedPriceRange === 4) return book.price > 30;
-        return false;
-      })();
-      return matchesSearch && matchesPriceRange;
-    });
-  }, [booksData, searchTerm, selectedPriceRange]);
-
-  const searchBooksHandler = (term: string): void => {
-    setSearchTerm(term);
-  };
-
-  const selectBooksHandler = (range: number): void => {
-    setSelectedPriceRange(range);
-  };
-
+export default function BookList({
+  filteredBooks,
+}: {
+  filteredBooks: BookType[];
+}) {
   return (
     <Box
       sx={{
@@ -44,11 +17,6 @@ export default function BookList() {
         alignItems: 'center',
       }}
     >
-      <Toolbar sx={{ position: 'fixed', zIndex: 'modal', top: 0 }}>
-        <BookSearch searchBooks={searchBooksHandler} />
-        <BookSelect selectBooks={selectBooksHandler} />
-      </Toolbar>
-
       <Box sx={{ marginTop: '10px', width: '100%' }}>
         <Books books={filteredBooks} />
       </Box>
