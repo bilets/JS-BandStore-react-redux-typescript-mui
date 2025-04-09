@@ -29,13 +29,11 @@ export default function App() {
       const matchesSearch = book.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-      const matchesPriceRange = (() => {
-        if (selectedPriceRange === 1) return true;
-        if (selectedPriceRange === 2) return book.price > 0 && book.price < 15;
-        if (selectedPriceRange === 3) return book.price > 15 && book.price < 30;
-        if (selectedPriceRange === 4) return book.price > 30;
-        return false;
-      })();
+      const matchesPriceRange =
+        selectedPriceRange === 1 ||
+        (selectedPriceRange === 2 && book.price > 0 && book.price < 15) ||
+        (selectedPriceRange === 3 && book.price > 15 && book.price < 30) ||
+        (selectedPriceRange === 4 && book.price > 30);
       return matchesSearch && matchesPriceRange;
     });
   }, [booksData, searchTerm, selectedPriceRange]);
