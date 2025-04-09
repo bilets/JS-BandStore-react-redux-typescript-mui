@@ -68,7 +68,7 @@ export default function SpecificBook() {
             {book.author}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Book in cart: {bookInCartCount}
+            Book in cart: <strong>{bookInCartCount}</strong>
           </Typography>
           <Form title={book.title} price={book.price} id={book.id} />
         </CardContent>
