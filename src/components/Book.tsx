@@ -14,7 +14,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import imageNotFound from '/images/imageNotFound.png';
 
-const MAX_TITLE_LENGTH = 60; 
+const MAX_TITLE_LENGTH = 60;
 
 export default function Book({
   author,
@@ -80,7 +80,16 @@ export default function Book({
         <Typography>
           price: <b>{price} $</b>
         </Typography>
-        <Button size="large" color="secondary" onClick={handleViewClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            '&:hover': {
+              color: 'secondary.main',
+            },
+          }}
+          onClick={handleViewClick}
+        >
           View
         </Button>
       </CardActions>

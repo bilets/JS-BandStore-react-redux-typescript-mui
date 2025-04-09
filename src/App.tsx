@@ -6,9 +6,10 @@ import BookList from './routes/BookList.tsx';
 import SpecificBook from './routes/SpecificBook.tsx';
 import Cart from './routes/Cart.tsx';
 import NotFoundPage from './routes/NotFoundPage.tsx';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BookType } from './types/types';
 import booksData from './data/books.json';
+import defaultTheme from './theme';
 
 export default function App() {
   const [username, setUsername] = useState<string>('');
@@ -22,17 +23,6 @@ export default function App() {
   const resetUsernameHandler = () => {
     setUsername('');
   };
-
-  const defaultTheme = createTheme({
-    palette: {
-      primary: {
-        main: '#212121',
-      },
-      secondary: {
-        main: '#f50057',
-      },
-    },
-  });
 
   const filteredBooks = useMemo(() => {
     return booksData.filter((book: BookType) => {

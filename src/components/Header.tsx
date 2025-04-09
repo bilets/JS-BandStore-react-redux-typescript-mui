@@ -1,6 +1,8 @@
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../redux/cart/actionCreators';
+import { HeaderProps } from '../types/types';
+import { RootState } from '../redux/store';
 import {
   AppBar,
   Box,
@@ -16,7 +18,6 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookSearch from './BookSearch';
 import BookSelect from './BookSelect';
-import { HeaderProps } from '../types/types';
 
 export default function Header({
   username,
@@ -26,7 +27,7 @@ export default function Header({
 }: HeaderProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cart = useSelector((state: any) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
   const location = useLocation();
 
   const totalBooksInCart = cart.reduce(

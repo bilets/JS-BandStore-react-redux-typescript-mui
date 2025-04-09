@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { useParams } from 'react-router-dom';
 import { BookType } from '../types/types';
 import { CartItem } from '../types/types';
@@ -16,7 +17,7 @@ import booksData from '../data/books.json';
 import imageNotFound from '/images/imageNotFound.png';
 
 export default function SpecificBook() {
-  const cart = useSelector((state: any) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
   const { title } = useParams<{ title: string }>();
 
   const book = booksData.find((book: BookType) => book.title === title);

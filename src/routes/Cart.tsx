@@ -5,6 +5,7 @@ import {
   decreaseQuantityBook,
   increaseQuantityBook,
 } from '../redux/cart/actionCreators';
+import { RootState } from '../redux/store';
 import { CartItem } from '../types/types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,9 +21,8 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import cartImg from '/images/cart.svg';
 
-
 export default function Cart() {
-  const cart = useSelector((state: any) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
   if (cart.length === 0) {
