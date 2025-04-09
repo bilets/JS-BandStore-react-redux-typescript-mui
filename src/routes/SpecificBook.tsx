@@ -20,14 +20,18 @@ export default function SpecificBook() {
   const cart = useSelector((state: RootState) => state.cart);
   const { title } = useParams<{ title: string }>();
 
-  const book = booksData.find((book: BookType) => book.title === title);
+  if (!title) {
+    return <NotFoundPage />;
+  }
 
-  const bookInCartCount =
-    cart.find((bookInCart: CartItem) => bookInCart.title === title)?.count || 0;
+  const book = booksData.find((book: BookType) => book.title === title);
 
   if (!book) {
     return <NotFoundPage />;
   }
+
+  const bookInCartCount =
+    cart.find((bookInCart: CartItem) => bookInCart.title === title)?.count || 0;
 
   return (
     <Box
