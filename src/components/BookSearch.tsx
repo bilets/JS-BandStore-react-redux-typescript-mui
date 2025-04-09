@@ -1,9 +1,9 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 
-interface BookSearchProps {
+type BookSearchProps = {
   searchBooks: (bookName: string) => void;
-}
+};
 
 export default function BookSearch({ searchBooks }: BookSearchProps) {
   const [bookName, setBookName] = useState<string>('');

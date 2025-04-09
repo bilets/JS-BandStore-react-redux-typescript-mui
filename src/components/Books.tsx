@@ -2,9 +2,9 @@ import { BookType } from '../types/types';
 import Book from './Book.tsx';
 import Box from '@mui/material/Box';
 
-interface BooksProps {
+type BooksProps = {
   books: BookType[];
-}
+};
 
 export default function Books({ books }: BooksProps) {
   return (

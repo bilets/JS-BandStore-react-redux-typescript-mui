@@ -1,10 +1,11 @@
 import { useState, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cart/actionCreators';
+import { BookType } from '../types/types';
 import { Box, TextField, Typography, Button } from '@mui/material';
 
 
-export default function Form({ title, price, id }: { title: string; price: number; id: number; }) {
+export default function Form({ title, price, id }: BookType) {
   const [count, setCount] = useState<number>(1);
   const dispatch = useDispatch();
 

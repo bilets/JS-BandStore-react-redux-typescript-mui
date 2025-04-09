@@ -49,7 +49,6 @@ export default function SpecificBook() {
           flexDirection: { xs: 'column', sm: 'row' },
           marginBottom: 2,
           width: '100%',
-          maxWidth: 1100,
         }}
       >
         <CardMedia

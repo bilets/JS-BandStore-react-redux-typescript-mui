@@ -3,9 +3,9 @@ import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { Stack, Button, TextField, Avatar } from '@mui/material';
 import avatar from '/images/avatar.png';
 
-interface SignInProps {
+type SignInProps = {
   addUsername: (username: string) => void;
-}
+};
 
 export default function SignIn({ addUsername }: SignInProps) {
   const navigate = useNavigate();
@@ -16,10 +16,10 @@ export default function SignIn({ addUsername }: SignInProps) {
   };
 
   const handleSignIn = (): void => {
-   if (username.length >= 4 && username.length <= 16) {
-     navigate('books');
-     addUsername(username);
-   }
+    if (username.length >= 4 && username.length <= 16) {
+      navigate('books');
+      addUsername(username);
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {

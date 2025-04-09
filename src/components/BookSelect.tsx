@@ -1,9 +1,15 @@
-import { useEffect, useState} from 'react';
-import { Select, MenuItem, FormControl, InputLabel,SelectChangeEvent } from '@mui/material';
+import { useEffect, useState } from 'react';
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+} from '@mui/material';
 
-interface BookSelectProps {
+type BookSelectProps = {
   selectBooks: (selectedValue: number) => void;
-}
+};
 
 export default function BookSelect({ selectBooks }: BookSelectProps) {
   const [bookSelect, setBookSelect] = useState<number>(1);
@@ -12,8 +18,8 @@ export default function BookSelect({ selectBooks }: BookSelectProps) {
     selectBooks(bookSelect);
   }, [bookSelect, selectBooks]);
 
- const handleSelectChange = (e: SelectChangeEvent<number>) => {
-    setBookSelect(Number(e.target.value)); 
+  const handleSelectChange = (e: SelectChangeEvent<number>) => {
+    setBookSelect(Number(e.target.value));
   };
 
   return (
