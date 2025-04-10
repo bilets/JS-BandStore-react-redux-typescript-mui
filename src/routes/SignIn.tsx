@@ -12,21 +12,24 @@ export default function SignIn({ addUsername }: SignInProps) {
   const [username, setUsername] = useState<string>('');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setUsername(e.target.value);
+    setUsername(e.target.value.trim());
   };
 
   const handleSignIn = (): void => {
     if (username.length >= 4 && username.length <= 16) {
-      navigate('books');
       addUsername(username);
+      navigate('books');
     }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && username.length >= 4 && username.length <= 16) {
+      e.preventDefault();
       handleSignIn();
     }
   };
+
+  const isSignInDisabled = username.length < 4 || username.length > 16;
 
   return (
     <Stack
@@ -48,13 +51,16 @@ export default function SignIn({ addUsername }: SignInProps) {
         value={username}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        helperText="Please enter your name (4-16 characters)"
+        helperText={
+          isSignInDisabled && 'Username must be between 4 and 16 characters'
+        }
+        error={isSignInDisabled}
         size="small"
         fullWidth
       />
       <Button
         variant="contained"
-        disabled={username.length < 4 || username.length > 16}
+        disabled={isSignInDisabled}
         onClick={handleSignIn}
         fullWidth
       >
