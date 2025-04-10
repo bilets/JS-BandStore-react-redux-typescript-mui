@@ -1,15 +1,16 @@
 {
-  "name": "js-bant-store-react-redux-typescript-mui",
+  "name": "js-band-store-react-redux-typescript-mui",
+  "homepage": "https://bilets.github.io/JS-BandStore-react-redux-typescript-mui/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predeploy": "vite build",
-    "deploy": "gh-pages -d dist",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
