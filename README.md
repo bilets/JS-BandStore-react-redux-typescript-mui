@@ -3,10 +3,10 @@ The updated project is available at the following link:
 👉 [Book Online Store (Updated)](https://bilets.github.io/JS-BandStore-react-redux-typescript-mui/)
 
 For reference, here’s the link to the older version of the project, which I developed while learning TypeScript and Material UI:
-👉 [Book Online Store (Updated)](https://bilets.github.io/JS-BandStore-react-typescript-mui/)
+👉 [Book Online Store](https://github.com/bilets/JS-BandStore-react-typescript-mui/tree/master?tab=readme-ov-file)
 
 For reference, here’s the link to the older version of the project:
-👉 [Book Online Store (Old Version)](https://bilets.github.io/course-task-react/)
+👉 [Book Online Store (Old Version)](https://github.com/bilets/course-task-react)
 
 The project was completed according to the requirements outlined in the following document:
 👉 [Project Requirements](https://github.com/bilets/JS-BandStore-react-typescript-mui/blob/master/course-project-requirements.pdf)
