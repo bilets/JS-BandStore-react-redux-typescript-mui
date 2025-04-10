@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/JS-BandStore-react-typescript-mui-redux/',
+  base: '/JS-BandStore-react-redux-typescript-mui',
   plugins: [react()],
 });
