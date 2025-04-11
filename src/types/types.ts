@@ -18,8 +18,6 @@ export type CartItem = {
 export type HeaderProps = {
   username: string | null;
   resetUsername: () => void;
-  searchBooksHandler: (bookName: string) => void;
-  selectBooksHandler: (range: number) => void;
 };
 
 export type Action = {

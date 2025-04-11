@@ -10,8 +10,11 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  IconButton,
+  Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import imageNotFound from '/images/imageNotFound.png';
 
 const MAX_TITLE_LENGTH = 60;
@@ -77,9 +80,14 @@ export default function Book({
       <CardActions
         sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
       >
-        <Typography>
-          price: <b>{price} $</b>
-        </Typography>
+        <Box  sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography>
+            price: <b>{price} $</b>
+          </Typography>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+        </Box>
         <Button
           variant="contained"
           color="primary"

@@ -1,8 +1,10 @@
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../redux/cart/actionCreators';
+import { resetFilters } from '../redux/slices/filterSlice';
 import { HeaderProps } from '../types/types';
 import { RootState } from '../redux/store';
+import Filter from './Filter';
 import {
   AppBar,
   Box,
@@ -16,15 +18,9 @@ import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BookSearch from './BookSearch';
-import BookSelect from './BookSelect';
 
-export default function Header({
-  username,
-  resetUsername,
-  searchBooksHandler,
-  selectBooksHandler,
-}: HeaderProps) {
+
+export default function Header({ username, resetUsername }: HeaderProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -39,6 +35,7 @@ export default function Header({
     navigate('/');
     resetUsername();
     dispatch(clearCart());
+    dispatch(resetFilters());
   };
 
   const CartBadge = styled(Badge)`
@@ -93,20 +90,7 @@ export default function Header({
                 JS BAND STORE
               </Typography>
             </Tooltip>
-            {location.pathname === '/books' && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'column', sm: 'row' },
-                  alignItems: 'center',
-                  gap: 2,
-                  mt: { xs: 2, sm: 0 },
-                }}
-              >
-                <BookSearch searchBooks={searchBooksHandler} />
-                <BookSelect selectBooks={selectBooksHandler} />
-              </Box>
-            )}
+            {location.pathname === '/books' && <Filter />}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <Link to="/cart">
                 <IconButton>
