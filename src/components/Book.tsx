@@ -1,5 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { BookType } from '../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addFavoriteBook,
+  deleteFavoriteBook,
+  selectFavoriteBooks,
+} from '../redux/slices/favoriteBooksSlice';
 import {
   Card,
   CardActions,
@@ -25,17 +31,24 @@ export default function Book({
   image,
   title,
   shortDescription,
+  id,
 }: BookType) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isFavorite = useSelector(selectFavoriteBooks).includes(id);
+
+  const handleViewBook = () => {
+    navigate(title);
+  };
+
+  const handleFavoriteBook = () => {
+    dispatch(isFavorite ? deleteFavoriteBook(id) : addFavoriteBook(id));
+  };
 
   const truncatedTitle =
     title.length > MAX_TITLE_LENGTH
       ? `${title.slice(0, MAX_TITLE_LENGTH)}...`
       : title;
-
-  const handleViewClick = () => {
-    navigate(title);
-  };
 
   return (
     <Card
@@ -64,11 +77,7 @@ export default function Book({
         </Typography>
       </CardContent>
       <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography component="span">Description</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -80,12 +89,12 @@ export default function Book({
       <CardActions
         sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
       >
-        <Box  sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography>
             price: <b>{price} $</b>
           </Typography>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+          <IconButton onClick={handleFavoriteBook}>
+            <FavoriteIcon color={isFavorite ? 'secondary' : 'inherit'} />
           </IconButton>
         </Box>
         <Button
@@ -96,7 +105,7 @@ export default function Book({
               color: 'secondary.main',
             },
           }}
-          onClick={handleViewClick}
+          onClick={handleViewBook}
         >
           View
         </Button>

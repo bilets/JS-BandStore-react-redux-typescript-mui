@@ -1,9 +1,17 @@
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../redux/cart/actionCreators';
-import { resetFilters } from '../redux/slices/filterSlice';
+import {
+  setOnlyFavoriteFilter,
+  selectOnlyFavoriteFilter,
+  resetFilters,
+} from '../redux/slices/filterSlice';
 import { HeaderProps } from '../types/types';
 import { RootState } from '../redux/store';
+import {
+  selectFavoriteBooks,
+  resetFavoriteBooks,
+} from '../redux/slices/favoriteBooksSlice';
 import Filter from './Filter';
 import {
   AppBar,
@@ -12,39 +20,16 @@ import {
   Typography,
   Button,
   Tooltip,
-  IconButton,
+  Checkbox,
 } from '@mui/material';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function Header({ username, resetUsername }: HeaderProps) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart);
-  const location = useLocation();
-
-  const totalBooksInCart = cart.reduce(
-    (sum: number, item: { count: number }) => sum + item.count,
-    0
-  );
-
-  const signOut = (): void => {
-    navigate('/');
-    resetUsername();
-    dispatch(clearCart());
-    dispatch(resetFilters());
-  };
-
-  const CartBadge = styled(Badge)`
-    & .${badgeClasses.badge} {
-      top: -12px;
-      right: -6px;
-    }
-  `;
-
   if (!username) {
     return (
       <Box>
@@ -56,6 +41,37 @@ export default function Header({ username, resetUsername }: HeaderProps) {
       </Box>
     );
   }
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart);
+  const onlyFavoriteFilter = useSelector(selectOnlyFavoriteFilter);
+  const favoriteBooksQuantity = useSelector(selectFavoriteBooks).length;
+  const location = useLocation();
+
+  const totalBooksInCart = cart.reduce(
+    (sum: number, item: { count: number }) => sum + item.count,
+    0
+  );
+
+  const handleOnlyFavoriteFilterChange = () => {
+    dispatch(setOnlyFavoriteFilter());
+  };
+
+  const signOut = (): void => {
+    navigate('/');
+    resetUsername();
+    dispatch(clearCart());
+    dispatch(resetFilters());
+    dispatch(resetFavoriteBooks());
+  };
+
+  const FavoriteBadge = styled(Badge)`
+    & .${badgeClasses.badge} {
+      top: 8px;
+      right: 10px;
+    }
+  `;
 
   return (
     <Box>
@@ -92,23 +108,50 @@ export default function Header({ username, resetUsername }: HeaderProps) {
             </Tooltip>
             {location.pathname === '/books' && <Filter />}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Link to="/cart">
-                <IconButton>
-                  <ShoppingCartOutlinedIcon
-                    fontSize="large"
-                    sx={{
-                      color: 'white',
-                      '&:hover': {
-                        color: 'secondary.main',
-                      },
-                    }}
-                  />
-                  <CartBadge
-                    badgeContent={totalBooksInCart}
+              {location.pathname === '/books' && (
+                <Tooltip title="Favorite">
+                  <FavoriteBadge
+                    badgeContent={favoriteBooksQuantity}
                     color="secondary"
-                  />
-                </IconButton>
-              </Link>
+                  >
+                    <Checkbox
+                      icon={
+                        <FavoriteBorderIcon
+                          fontSize="large"
+                          sx={{
+                            color: 'white',
+                          }}
+                        />
+                      }
+                      checkedIcon={
+                        <FavoriteIcon
+                          fontSize="large"
+                          sx={{
+                            color: 'secondary.main',
+                          }}
+                        />
+                      }
+                      checked={onlyFavoriteFilter}
+                      onChange={handleOnlyFavoriteFilterChange}
+                    />
+                  </FavoriteBadge>
+                </Tooltip>
+              )}
+              <Tooltip title="Cart">
+                <Link to="/cart">
+                  <Badge badgeContent={totalBooksInCart} color="secondary">
+                    <ShoppingCartOutlinedIcon
+                      fontSize="large"
+                      sx={{
+                        color: 'white',
+                        '&:hover': {
+                          color: 'secondary.main',
+                        },
+                      }}
+                    />
+                  </Badge>
+                </Link>
+              </Tooltip>
               <Button
                 color="inherit"
                 onClick={signOut}

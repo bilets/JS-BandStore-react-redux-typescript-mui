@@ -2,9 +2,9 @@ import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setTitleFilter,
-  setPriceRange,
+  setPriceRangeFilter,
   selectTitleFilter,
-  selectPriceRange,
+  selectPriceRangeFilter,
 } from '../redux/slices/filterSlice';
 import {
   TextField,
@@ -19,14 +19,14 @@ import {
 export default function Filter() {
   const dispatch = useDispatch();
   const titleFilter = useSelector(selectTitleFilter);
-  const priceRange = useSelector(selectPriceRange);
+  const priceRange = useSelector(selectPriceRangeFilter);
 
   const handleTitleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitleFilter(e.target.value));
   };
 
   const handlePriceRangeChange = (e: SelectChangeEvent<number>) => {
-    dispatch(setPriceRange(Number(e.target.value)));
+    dispatch(setPriceRangeFilter(Number(e.target.value)));
   };
 
   return (
