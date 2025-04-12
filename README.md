@@ -1,4 +1,4 @@
-This is my rewritten project, "Book Online Store". In this updated version, I integrated Redux to manage the shopping cart state and implemented several other improvements to enhance the user experience and code structure.
+This is my rewritten project, "Book Online Store". In this updated version, I integrated the classic Redux approach to manage the shopping cart state and used the Redux Toolkit with slices for handling book filtering and favorites. I also introduced several other improvements to enhance the user experience and overall code structure. 
 The updated project is available at the following link:
 👉 [Book Online Store (Updated)](https://bilets.github.io/JS-BandStore-react-redux-typescript-mui/)
 
