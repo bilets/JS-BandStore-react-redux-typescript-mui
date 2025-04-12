@@ -14,12 +14,14 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  useTheme,
 } from '@mui/material';
 
 export default function Filter() {
   const dispatch = useDispatch();
   const titleFilter = useSelector(selectTitleFilter);
   const priceRange = useSelector(selectPriceRangeFilter);
+  const theme = useTheme();
 
   const handleTitleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitleFilter(e.target.value));
@@ -40,7 +42,17 @@ export default function Filter() {
       }}
     >
       <TextField
-        sx={{ bgcolor: 'white', m: 1, minWidth: 200 }}
+        sx={{
+          bgcolor: theme.palette.background.paper,
+          color: theme.palette.text.primary,
+          minWidth: 200,
+          '& .MuiInputBase-input': {
+            color: theme.palette.text.primary,
+          },
+          '& .MuiInputLabel-root': {
+            color: theme.palette.text.secondary,
+          },
+        }}
         type="search"
         label="Search Book"
         size="small"
@@ -48,11 +60,20 @@ export default function Filter() {
         value={titleFilter}
         onChange={handleTitleFilterChange}
       />
-
       <FormControl
         fullWidth
         variant="standard"
-        sx={{ bgcolor: 'white', m: 1, minWidth: 200 }}
+        sx={{
+          bgcolor: theme.palette.background.paper,
+          m: 1,
+          minWidth: 200,
+          '& .MuiInputBase-input': {
+            color: theme.palette.text.primary,
+          },
+          '& .MuiInputLabel-root': {
+            color: theme.palette.text.secondary,
+          },
+        }}
       >
         <InputLabel id="book-select-label">Select Book</InputLabel>
         <Select

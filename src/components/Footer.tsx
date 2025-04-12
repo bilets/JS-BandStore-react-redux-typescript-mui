@@ -6,7 +6,7 @@ export default function Footer() {
       sx={{
         width: '100%',
         height: '30px',
-        backgroundColor: '#212121',
+        backgroundColor: 'primary.main',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -14,13 +14,12 @@ export default function Footer() {
     >
       <Link
         href="https://prometheus.org.ua/"
-        color="inherit"
+        color="white"
         underline="none"
         sx={{
-          color: '#ffffff',
           fontSize: '14px',
           '&:hover': {
-            color: 'red',
+            color: 'secondary.main',
           },
         }}
       >

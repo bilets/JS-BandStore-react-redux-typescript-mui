@@ -21,6 +21,8 @@ import {
   Button,
   Tooltip,
   Checkbox,
+  Switch,
+  Avatar,
 } from '@mui/material';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
@@ -28,8 +30,15 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export default function Header({ username, resetUsername }: HeaderProps) {
+export default function Header({
+  username,
+  resetUsername,
+  toggleTheme,
+  isDarkTheme,
+}: HeaderProps) {
   if (!username) {
     return (
       <Box>
@@ -117,7 +126,6 @@ export default function Header({ username, resetUsername }: HeaderProps) {
                     <Checkbox
                       icon={
                         <FavoriteBorderIcon
-                          fontSize="large"
                           sx={{
                             color: 'white',
                           }}
@@ -125,7 +133,6 @@ export default function Header({ username, resetUsername }: HeaderProps) {
                       }
                       checkedIcon={
                         <FavoriteIcon
-                          fontSize="large"
                           sx={{
                             color: 'secondary.main',
                           }}
@@ -141,7 +148,6 @@ export default function Header({ username, resetUsername }: HeaderProps) {
                 <Link to="/cart">
                   <Badge badgeContent={totalBooksInCart} color="secondary">
                     <ShoppingCartOutlinedIcon
-                      fontSize="large"
                       sx={{
                         color: 'white',
                         '&:hover': {
@@ -151,6 +157,14 @@ export default function Header({ username, resetUsername }: HeaderProps) {
                     />
                   </Badge>
                 </Link>
+              </Tooltip>
+              <Tooltip title="Toggle Theme">
+                <Switch
+                  checked={isDarkTheme}
+                  onChange={toggleTheme}
+                  icon={<Brightness7Icon />}
+                  checkedIcon={<Brightness4Icon sx={{ color: '#fff' }} />}
+                />
               </Tooltip>
               <Button
                 color="inherit"
@@ -163,10 +177,11 @@ export default function Header({ username, resetUsername }: HeaderProps) {
               >
                 Sign-out
               </Button>
-              <AccountCircleIcon fontSize="large" />
-              <Typography variant="body1" color="inherit">
-                {username}
-              </Typography>
+              <Avatar
+                alt={username.toUpperCase()}
+                src="/broken-image.jpg"
+                sx={{ width: 30, height: 30 }}
+              />
             </Box>
           </Box>
         </Toolbar>

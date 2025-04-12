@@ -18,6 +18,8 @@ export type CartItem = {
 export type HeaderProps = {
   username: string | null;
   resetUsername: () => void;
+  toggleTheme?: () => void;
+  isDarkTheme?: boolean;
 };
 
 export type Action = {

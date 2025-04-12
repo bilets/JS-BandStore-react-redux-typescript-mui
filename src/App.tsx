@@ -7,22 +7,31 @@ import SpecificBook from './routes/SpecificBook.tsx';
 import Cart from './routes/Cart.tsx';
 import NotFoundPage from './routes/NotFoundPage.tsx';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import defaultTheme from './theme';
-
+import { lightTheme, darkTheme } from './theme';
 
 export default function App() {
-  const [username, setUsername] = useState<string>('');
+  const [username, setUsername] = useState<string>(
+    localStorage.getItem('username') || ''
+  );
+
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
   const addUsernameHandler = (username: string) => {
     setUsername(username);
+    localStorage.setItem('username', username);
   };
 
   const resetUsernameHandler = () => {
     setUsername('');
+    localStorage.removeItem('username');
+  };
+
+  const toggleTheme = () => {
+    setIsDarkTheme((prev) => !prev);
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <CssBaseline />
 
       <HashRouter>
@@ -33,6 +42,8 @@ export default function App() {
               <MainLayout
                 username={username}
                 resetUsername={resetUsernameHandler}
+                toggleTheme={toggleTheme}
+                isDarkTheme={isDarkTheme}
               />
             }
           >

@@ -4,7 +4,12 @@ import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import { Box } from '@mui/material';
 
-export default function MainLayout({ username, resetUsername }: HeaderProps) {
+export default function MainLayout({
+  username,
+  resetUsername,
+  toggleTheme,
+  isDarkTheme,
+}: HeaderProps) {
   return (
     <Box
       sx={{
@@ -15,7 +20,12 @@ export default function MainLayout({ username, resetUsername }: HeaderProps) {
         alignItems: 'center',
       }}
     >
-      <Header username={username} resetUsername={resetUsername} />
+      <Header
+        username={username}
+        resetUsername={resetUsername}
+        toggleTheme={toggleTheme}
+        isDarkTheme={isDarkTheme}
+      />
       <Outlet />
       <Footer />
     </Box>
