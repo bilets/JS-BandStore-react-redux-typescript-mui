@@ -31,6 +31,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 export default function Header({
   username,
@@ -168,14 +169,35 @@ export default function Header({
               <Button
                 color="inherit"
                 onClick={signOut}
+                startIcon={<LogoutOutlinedIcon />}
                 sx={{
+                  textTransform: 'none',
                   '&:hover': {
                     color: 'secondary.main',
                   },
                 }}
               >
-                Sign-out
+                Sign Out
               </Button>
+              {/* <Button
+                variant="outlined"
+                color="inherit"
+                onClick={signOut}
+                startIcon={<LogoutOutlinedIcon />}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  '&:hover': {
+                    borderColor: 'secondary.main',
+                    color: 'secondary.main',
+                    backgroundColor: 'action.hover',
+                  },
+                }}
+              >
+                Sign Out
+              </Button> */}
               <Avatar
                 alt={username.toUpperCase()}
                 src="/broken-image.jpg"

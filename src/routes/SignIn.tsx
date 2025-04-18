@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { Stack, Button, TextField, Avatar } from '@mui/material';
-import avatar from '/images/avatar.png';
+import Einstein_without_a_tongue from '/images/Einstein_without_a_tongue.png';
+import Einstein_with_a_tongue from '/images/Einstein_with_a_tongue.png';
 
 type SignInProps = {
   addUsername: (username: string) => void;
@@ -44,7 +45,13 @@ export default function SignIn({ addUsername }: SignInProps) {
       noValidate
       autoComplete="off"
     >
-      <Avatar alt="User Avatar" src={avatar} sx={{ width: 225, height: 225 }} />
+      <Avatar
+        alt="User Avatar"
+        src={
+          isSignInDisabled ? Einstein_without_a_tongue : Einstein_with_a_tongue
+        }
+        sx={{ width: 225, height: 225 }}
+      />
       <TextField
         label="Username"
         variant="outlined"
@@ -60,11 +67,17 @@ export default function SignIn({ addUsername }: SignInProps) {
       />
       <Button
         variant="contained"
+        sx={{
+          textTransform: 'none',
+          '&:hover': {
+            color: 'secondary.main',
+          },
+        }}
         disabled={isSignInDisabled}
         onClick={handleSignIn}
         fullWidth
       >
-        Sign-In
+        Sign In
       </Button>
     </Stack>
   );

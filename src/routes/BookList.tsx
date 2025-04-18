@@ -10,6 +10,7 @@ import { BookType } from '../types/types';
 import booksData from '../data/books.json';
 import Book from '../components/Book.tsx';
 import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 
 export default function BookList() {
   const titleFilter = useSelector(selectTitleFilter);
@@ -53,9 +54,31 @@ export default function BookList() {
             gap: 2,
           }}
         >
-          {filteredBooks.map((book) => (
-            <Book key={book.id} {...book} />
-          ))}
+          {onlyFavoriteFilter && favoriteBooks.length === 0 ? (
+            <Typography
+              variant="h5"
+              sx={{
+                color: 'text.secondary',
+                textAlign: 'center',
+                py: 4,
+              }}
+            >
+              No favorite books selected
+            </Typography>
+          ) : filteredBooks.length > 0 ? (
+            filteredBooks.map((book) => <Book key={book.id} {...book} />)
+          ) : (
+            <Typography
+              variant="h5"
+              sx={{
+                color: 'text.secondary',
+                textAlign: 'center',
+                py: 4,
+              }}
+            >
+              No books found matching your search criteria
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

@@ -33,7 +33,7 @@ export default function Cart() {
           alt="Cart"
           style={{ width: '150px', marginBottom: '16px' }}
         />
-        <Typography variant="h6">Cart is empty...</Typography>
+        <Typography variant="h5" color='text.secondary'>Cart is empty...</Typography>
       </Box>
     );
   }

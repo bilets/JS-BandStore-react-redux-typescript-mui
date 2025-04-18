@@ -45,12 +45,20 @@ export default function Filter() {
         sx={{
           bgcolor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          minWidth: 200,
+          width: 250,
+          height: 45,
+          borderRadius: 1,
+          '& .MuiInputBase-root': {
+            height: '100%',
+          },
           '& .MuiInputBase-input': {
             color: theme.palette.text.primary,
+            height: '100%',
+            padding: '0 10px',
           },
           '& .MuiInputLabel-root': {
             color: theme.palette.text.secondary,
+            marginLeft: '5px',
           },
         }}
         type="search"
@@ -63,15 +71,24 @@ export default function Filter() {
       <FormControl
         fullWidth
         variant="standard"
+        size="small"
         sx={{
           bgcolor: theme.palette.background.paper,
           m: 1,
-          minWidth: 200,
+          width: 250,
+          height: 45,
+          borderRadius: 1,
+          '& .MuiInputBase-root': {
+            height: '100%',
+          },
           '& .MuiInputBase-input': {
             color: theme.palette.text.primary,
+            height: '100%',
+            padding: '0 10px',
           },
           '& .MuiInputLabel-root': {
             color: theme.palette.text.secondary,
+            marginLeft: '5px',
           },
         }}
       >
@@ -82,7 +99,7 @@ export default function Filter() {
           onChange={handlePriceRangeChange}
           label="Select Book"
         >
-          <MenuItem value={1}>All</MenuItem>
+          <MenuItem value={1}>All Books</MenuItem>
           <MenuItem value={2}>
             0 {'<'} price {'<'} 15
           </MenuItem>
