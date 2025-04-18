@@ -13,5 +13,9 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: { main: '#404040' },
     secondary: { main: '#f50057' },
+    background: {
+      default: '#303030',
+      paper: '#424242', 
+    },
   },
 });

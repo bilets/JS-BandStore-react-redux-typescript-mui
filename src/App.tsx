@@ -10,20 +10,16 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme, darkTheme } from './theme';
 
 export default function App() {
-  const [username, setUsername] = useState<string>(
-    localStorage.getItem('username') || ''
-  );
+  const [username, setUsername] = useState<string>('');
 
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
   const addUsernameHandler = (username: string) => {
     setUsername(username);
-    localStorage.setItem('username', username);
   };
 
   const resetUsernameHandler = () => {
     setUsername('');
-    localStorage.removeItem('username');
   };
 
   const toggleTheme = () => {
