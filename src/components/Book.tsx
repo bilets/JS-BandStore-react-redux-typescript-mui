@@ -101,6 +101,7 @@ export default function Book({
           variant="contained"
           color="primary"
           sx={{
+            textTransform: 'none',
             '&:hover': {
               color: 'secondary.main',
             },
